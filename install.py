@@ -29,8 +29,17 @@ from pathlib import Path
 
 HOME = Path.home()
 PROJECT_DIR = Path(__file__).resolve().parent
-VENV_DIR = HOME / ".ipython" / "sqlenv"
-STARTUP_DIR = HOME / ".ipython" / "profile_default" / "startup"
+GLOBAL_DIR = HOME / ".ipython" / "sql_notepad"
+IS_GLOBAL = (PROJECT_DIR == GLOBAL_DIR)
+
+if IS_GLOBAL:
+    VENV_DIR = HOME / ".ipython" / "sqlenv"
+    IPYTHON_DIR = HOME / ".ipython"
+else:
+    VENV_DIR = PROJECT_DIR / "sqlenv"
+    IPYTHON_DIR = PROJECT_DIR / ".ipython"
+
+STARTUP_DIR = IPYTHON_DIR / "profile_default" / "startup"
 REQUIREMENTS_FILE = PROJECT_DIR / "requirements.txt"
 ENV_FILE = PROJECT_DIR / "db.env"
 STARTUP_SOURCE = PROJECT_DIR / "startup" / "10-auto-sql-transformer.py"
@@ -75,7 +84,7 @@ from IPython import get_ipython
 from dotenv import load_dotenv
 
 
-startup_dir = Path.home() / ".ipython" / "profile_default" / "startup"
+startup_dir = Path(__file__).resolve().parent
 dotenv_path = startup_dir / ".env"
 
 if not dotenv_path.exists():
@@ -354,12 +363,17 @@ def start_jupyter(target_dir: str | None = None) -> None:
         return
     remove_stale_pid()
 
+    env = os.environ.copy()
+    if not IS_GLOBAL:
+        env["IPYTHONDIR"] = str(IPYTHON_DIR)
+
     with LOG_FILE.open("ab") as log:
         proc = subprocess.Popen(
             jupyter_command(target_dir),
             cwd=str(PROJECT_DIR),
             stdout=log,
             stderr=subprocess.STDOUT,
+            env=env,
             start_new_session=(sys.platform != "win32"),
             creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if sys.platform == "win32" else 0,
         )
