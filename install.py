@@ -339,7 +339,13 @@ def start_jupyter(target_dir: str | None = None) -> None:
     print_step("Starting Jupyter Notebook...")
 
     if not PYTHON_BIN.exists():
-        print_error("Virtual environment not found. Run './mysql install' first.")
+        print("Virtual environment not found. Running installation automatically...")
+        check_python()
+        create_venv()
+        install_packages()
+        setup_jupyter_startup()
+        configure_credentials()
+        print_step("Resuming Jupyter Notebook startup...")
 
     existing_pid = read_pid()
     if existing_pid and process_running(existing_pid):
