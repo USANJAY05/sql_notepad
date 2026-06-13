@@ -1,120 +1,66 @@
-# MySQL Notebook
+# SQL Notepad
 
-This project sets up a Jupyter Notebook environment that auto-connects to MySQL and lets you run SQL directly in notebook cells.
+This project sets up a Jupyter Notebook environment that auto-connects to MySQL and lets you run SQL directly in notebook cells without explicit magic commands.
 
 ## Requirements
 
 - Python 3.8 or newer
-- MySQL access details in `db.env`
+- Git
 
-## Install
+## Quick Install (macOS/Linux)
 
-Install sets up the Python environment and asks for your MySQL username, password, host, database name, and port.
+You can automatically clone the repository and trigger the installation using this one-liner:
 
-Windows:
-
-```bat
-install.bat
+```bash
+curl -sSL https://raw.githubusercontent.com/USANJAY05/sql_notepad/main/install.sh | bash
 ```
 
-macOS/Linux:
+*This will clone the repository to `~/sql_notepad` and start the interactive setup.*
 
-```sh
-./install.sh
-```
+## Manual Setup
 
-Cross-platform Python command:
+If you prefer to install manually or are on Windows:
 
-```sh
-python install.py install
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/USANJAY05/sql_notepad.git
+   cd sql_notepad
+   ```
 
-`setup.bat` and `python install.py setup` still work as aliases for install.
+2. Run the installer:
+   - **macOS/Linux**: `./mysql install`
+   - **Windows**: `mysql install` (or `mysql.bat install`)
 
-## Modify Credentials
+The installer will ask for your MySQL username, password, host, port, and (optionally) your database name.
 
-Use this whenever the MySQL username, password, host, database, or port changes.
+## Commands
 
-Windows:
+Use the provided wrapper script to manage your environment from anywhere:
 
-```bat
-modify.bat
-```
+- `./mysql install` — Install packages and ask for DB credentials
+- `./mysql modify`  — Change saved DB credentials
+- `./mysql start`   — Start Jupyter Notebook in the background
+- `./mysql stop`    — Stop the Jupyter process started by this script
+- `./mysql restart` — Restart Jupyter Notebook
+- `./mysql status`  — Check whether Jupyter is running
+- `./mysql uninstall` — Remove the environment and startup files
 
-Cross-platform Python command:
+*(On Windows, use `mysql` instead of `./mysql`)*
 
-```sh
-python install.py modify
-```
+## Dynamic Workspace
 
-## Run
-
-Windows:
-
-```bat
-run.bat
-```
-
-macOS/Linux:
-
-```sh
-./run.sh
-```
-
-Cross-platform Python command:
-
-```sh
-python install.py start
-```
-
-## Stop
-
-Windows:
-
-```bat
-stop.bat
-```
-
-macOS/Linux:
-
-```sh
-./stop.sh
-```
-
-Cross-platform Python command:
-
-```sh
-python install.py stop
-```
-
-## Restart
-
-Windows:
-
-```bat
-restart.bat
-```
-
-Cross-platform Python command:
-
-```sh
-python install.py restart
-```
+Jupyter Notebook is dynamically configured to launch serving whatever directory you invoke `./mysql start` from! This gives you the freedom to start your notebook server from any project folder on your computer.
 
 ## Configuration
 
-Credentials are saved to `db.env` and copied to:
-
-```text
-~/.ipython/profile_default/startup/.env
-```
+Credentials are saved to `db.env` and copied to `~/.ipython/profile_default/startup/.env`.
 
 Supported variables:
-
 ```text
 DB_USER=root
-DB_PASSWORD=admin@123
+DB_PASSWORD=your_password
 DB_HOST=127.0.0.1
 DB_NAME=your_database_name
 DB_PORT=3306
 ```
+*(If `DB_NAME` is left blank, you can connect to your MySQL server globally without selecting a specific database).*
