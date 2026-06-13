@@ -1,17 +1,12 @@
 # SQL Notepad
 
-This project sets up a Jupyter Notebook environment that auto-connects to MySQL and lets you run SQL directly in notebook cells without explicit magic commands.
+Turn your Jupyter Notebook into a powerful SQL editor. Run SQL directly in notebook cells—no extra magic commands required.
 
-## Requirements
+## 🚀 One-Line Installation
 
-- Python 3.8 or newer
-- Git
+Open your terminal and run the command for your operating system:
 
-## Quick Install
-
-You can automatically install the entire environment globally or locally using a single command:
-
-**macOS / Linux:**
+**macOS & Linux:**
 ```bash
 curl -sSL https://raw.githubusercontent.com/USANJAY05/sql_notepad/main/install.sh | bash
 ```
@@ -21,64 +16,39 @@ curl -sSL https://raw.githubusercontent.com/USANJAY05/sql_notepad/main/install.s
 iwr -useb https://raw.githubusercontent.com/USANJAY05/sql_notepad/main/install.ps1 | iex
 ```
 
-The script will prompt you to choose an installation mode:
-- **Global Install (Recommended)**: Downloads to a hidden folder (`~/.ipython/sql_notepad`) and installs the `mysql` command globally so you can start notebooks from anywhere.
-- **Local Testing**: Downloads to a `./sql_notepad` folder in your current directory without adding any global system commands.
+The script will ask you if you want to install it globally (recommended) or locally. It will also securely ask for your MySQL database credentials so you never have to type them again.
 
-## Manual Setup
+## 💻 How to Use
 
-If you prefer to install manually:
-
-1. Clone the repository into your Jupyter config folder:
-   ```bash
-   git clone https://github.com/USANJAY05/sql_notepad.git ~/.ipython/sql_notepad
-   cd ~/.ipython/sql_notepad
-   ```
-
-2. Run the installer:
-   - **macOS/Linux**: `./mysql install`
-   - **Windows**: `mysql install` (or `mysql.bat install`)
-
-3. (Optional) Create a global alias or symlink to `~/.ipython/sql_notepad/mysql` so you can use the command from anywhere.
-
-The installer will ask for your MySQL username, password, host, port, and (optionally) your database name.
-
-## Commands
-
-Use the provided wrapper script to manage your environment from anywhere:
-
-- `./mysql install` — Install packages and ask for DB credentials
-- `./mysql modify`  — Change saved DB credentials
-- `./mysql start [dir]` — Start Jupyter Notebook (defaults to current directory)
-- `./mysql stop`    — Stop the Jupyter process
-- `./mysql restart [dir]` — Restart Jupyter Notebook
-- `./mysql status`  — Check whether Jupyter is running
-- `./mysql uninstall` — Remove the environment
-
-*(On Windows, use `mysql` instead of `./mysql`)*
-
-## Dynamic Workspace
-
-By default, Jupyter Notebook dynamically launches serving whatever directory you invoke `./mysql start` from. 
-
-If you want to open Jupyter in a specific directory (like your Desktop or your entire home folder), you can pass that path directly to the start command:
+If you chose the **Global Install**, you can now start your notebook from *any* folder on your computer! Just type:
 
 ```bash
-./mysql start ~/Desktop
-# or
-./mysql start /
+mysql start
 ```
 
-## Configuration
+*(If you are on macOS/Linux and didn't restart your terminal yet, use `~/.local/bin/mysql start`)*
 
-Credentials are saved to `db.env` and copied to `~/.ipython/profile_default/startup/.env`.
+Jupyter Notebook will open in your browser, automatically connected to your database. You can just type `SELECT * FROM ...` in any cell!
 
-Supported variables:
-```text
-DB_USER=root
-DB_PASSWORD=your_password
-DB_HOST=127.0.0.1
-DB_NAME=your_database_name
-DB_PORT=3306
+### Available Commands
+
+| Command | Description |
+|---|---|
+| `mysql start` | Start the notebook in the background |
+| `mysql stop` | Stop the background notebook process |
+| `mysql restart` | Restart the notebook server |
+| `mysql modify` | Update your database username/password |
+| `mysql status` | Check if the notebook is running |
+| `mysql uninstall` | Completely remove SQL Notepad from your computer |
+
+*(Note: By default, it opens the current directory. To open the notebook in a specific folder, just pass the path: `mysql start ~/Desktop`)*
+
+## 🛠️ Local Testing / Manual Setup
+
+If you chose the **Local Testing** option during installation, the app was downloaded to a `./sql_notepad` folder right where you were standing, instead of being installed globally. 
+
+To run it, you must enter that folder first:
+```bash
+cd sql_notepad
+./mysql start
 ```
-*(If `DB_NAME` is left blank, you can connect to your MySQL server globally without selecting a specific database).*
