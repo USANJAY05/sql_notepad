@@ -15,7 +15,9 @@ You can automatically install the entire environment globally using this one-lin
 curl -sSL https://raw.githubusercontent.com/USANJAY05/sql_notepad/main/install.sh | bash
 ```
 
-*This downloads the application to a hidden folder (`~/.ipython/sql_notepad`) and automatically installs the `mysql` command globally to your system so you can use it from any terminal.*
+The script will prompt you to choose an installation mode:
+- **Global Install (Recommended)**: Downloads to a hidden folder (`~/.ipython/sql_notepad`) and installs the `mysql` command globally so you can start notebooks from anywhere.
+- **Local Testing**: Downloads to a `./sql_notepad` folder in your current directory without adding any global system commands.
 
 ## Manual Setup
 
