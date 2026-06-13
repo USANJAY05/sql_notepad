@@ -1,0 +1,6 @@
+notebook
+ipython
+ipython-sql
+prettytable==0.7.2
+mysql-connector-python
+python-dotenv
