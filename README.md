@@ -7,12 +7,18 @@ This project sets up a Jupyter Notebook environment that auto-connects to MySQL 
 - Python 3.8 or newer
 - Git
 
-## Quick Install (macOS/Linux)
+## Quick Install
 
-You can automatically install the entire environment globally using this one-liner:
+You can automatically install the entire environment globally or locally using a single command:
 
+**macOS / Linux:**
 ```bash
 curl -sSL https://raw.githubusercontent.com/USANJAY05/sql_notepad/main/install.sh | bash
+```
+
+**Windows (PowerShell):**
+```powershell
+iwr -useb https://raw.githubusercontent.com/USANJAY05/sql_notepad/main/install.ps1 | iex
 ```
 
 The script will prompt you to choose an installation mode:
