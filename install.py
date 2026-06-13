@@ -249,9 +249,12 @@ def collect_db_credentials() -> dict[str, str]:
         "DB_USER": prompt_value("MySQL user", defaults["DB_USER"]),
         "DB_PASSWORD": prompt_value("MySQL password", defaults["DB_PASSWORD"], secret=True),
         "DB_HOST": prompt_value("MySQL host", defaults["DB_HOST"]),
-        "DB_NAME": prompt_value("Database name (optional)", defaults["DB_NAME"]),
+        "DB_NAME": prompt_value("Database name (optional, type 'none' to clear)", defaults["DB_NAME"]),
         "DB_PORT": prompt_value("MySQL port", defaults["DB_PORT"]),
     }
+
+    if values["DB_NAME"].lower() == "none":
+        values["DB_NAME"] = ""
 
     if not values["DB_USER"]:
         print_error("MySQL user is required.")
