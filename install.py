@@ -321,7 +321,8 @@ def remove_stale_pid() -> None:
         PID_FILE.unlink()
 
 
-def jupyter_command() -> list[str]:
+def jupyter_command(target_dir: str | None = None) -> list[str]:
+    nb_dir = str(Path(target_dir).expanduser().resolve()) if target_dir else str(Path.cwd())
     return [
         str(PYTHON_BIN),
         "-m",
@@ -330,11 +331,11 @@ def jupyter_command() -> list[str]:
         "--ip=0.0.0.0",
         f"--port={PORT}",
         "--no-browser",
-        f"--notebook-dir={Path.cwd()}",
+        f"--notebook-dir={nb_dir}",
     ]
 
 
-def start_jupyter() -> None:
+def start_jupyter(target_dir: str | None = None) -> None:
     print_step("Starting Jupyter Notebook...")
 
     if not PYTHON_BIN.exists():
@@ -349,7 +350,7 @@ def start_jupyter() -> None:
 
     with LOG_FILE.open("ab") as log:
         proc = subprocess.Popen(
-            jupyter_command(),
+            jupyter_command(target_dir),
             cwd=str(PROJECT_DIR),
             stdout=log,
             stderr=subprocess.STDOUT,
@@ -397,9 +398,9 @@ def stop_jupyter() -> None:
         print_error(f"Could not stop PID {pid}: {exc}")
 
 
-def restart_jupyter() -> None:
+def restart_jupyter(target_dir: str | None = None) -> None:
     stop_jupyter()
-    start_jupyter()
+    start_jupyter(target_dir)
 
 
 def check_status() -> None:
@@ -460,9 +461,9 @@ def print_help() -> None:
     print("\nCommands:")
     print("  install     Install packages and ask for DB credentials")
     print("  modify      Change saved DB credentials")
-    print("  start       Start Jupyter Notebook in the background")
+    print("  start [dir] Start Jupyter Notebook in the background (dir defaults to current)")
     print("  stop        Stop the Jupyter process started by this script")
-    print("  restart     Restart Jupyter Notebook")
+    print("  restart [dir] Restart Jupyter Notebook")
     print("  status      Check whether Jupyter is running")
     print("  uninstall   Remove the environment and startup files")
     print("  help        Show this message")
@@ -486,11 +487,13 @@ def main() -> None:
             configure_credentials()
             print("Credentials updated. Restart Jupyter to use the new values.")
         elif command in {"start", "run"}:
-            start_jupyter()
+            target_dir = sys.argv[2] if len(sys.argv) > 2 else None
+            start_jupyter(target_dir)
         elif command == "stop":
             stop_jupyter()
         elif command == "restart":
-            restart_jupyter()
+            target_dir = sys.argv[2] if len(sys.argv) > 2 else None
+            restart_jupyter(target_dir)
         elif command == "status":
             check_status()
         elif command == "uninstall":

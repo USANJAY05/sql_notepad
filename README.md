@@ -39,17 +39,25 @@ Use the provided wrapper script to manage your environment from anywhere:
 
 - `./mysql install` — Install packages and ask for DB credentials
 - `./mysql modify`  — Change saved DB credentials
-- `./mysql start`   — Start Jupyter Notebook in the background
-- `./mysql stop`    — Stop the Jupyter process started by this script
-- `./mysql restart` — Restart Jupyter Notebook
+- `./mysql start [dir]` — Start Jupyter Notebook (defaults to current directory)
+- `./mysql stop`    — Stop the Jupyter process
+- `./mysql restart [dir]` — Restart Jupyter Notebook
 - `./mysql status`  — Check whether Jupyter is running
-- `./mysql uninstall` — Remove the environment and startup files
+- `./mysql uninstall` — Remove the environment
 
 *(On Windows, use `mysql` instead of `./mysql`)*
 
 ## Dynamic Workspace
 
-Jupyter Notebook is dynamically configured to launch serving whatever directory you invoke `./mysql start` from! This gives you the freedom to start your notebook server from any project folder on your computer.
+By default, Jupyter Notebook dynamically launches serving whatever directory you invoke `./mysql start` from. 
+
+If you want to open Jupyter in a specific directory (like your Desktop or your entire home folder), you can pass that path directly to the start command:
+
+```bash
+./mysql start ~/Desktop
+# or
+./mysql start /
+```
 
 ## Configuration
 
