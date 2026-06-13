@@ -9,27 +9,29 @@ This project sets up a Jupyter Notebook environment that auto-connects to MySQL 
 
 ## Quick Install (macOS/Linux)
 
-You can automatically clone the repository and trigger the installation using this one-liner:
+You can automatically install the entire environment globally using this one-liner:
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/USANJAY05/sql_notepad/main/install.sh | bash
 ```
 
-*This will clone the repository to `~/sql_notepad` and start the interactive setup.*
+*This downloads the application to a hidden folder (`~/.ipython/sql_notepad`) and automatically installs the `mysql` command globally to your system so you can use it from any terminal.*
 
 ## Manual Setup
 
-If you prefer to install manually or are on Windows:
+If you prefer to install manually:
 
-1. Clone the repository:
+1. Clone the repository into your Jupyter config folder:
    ```bash
-   git clone https://github.com/USANJAY05/sql_notepad.git
-   cd sql_notepad
+   git clone https://github.com/USANJAY05/sql_notepad.git ~/.ipython/sql_notepad
+   cd ~/.ipython/sql_notepad
    ```
 
 2. Run the installer:
    - **macOS/Linux**: `./mysql install`
    - **Windows**: `mysql install` (or `mysql.bat install`)
+
+3. (Optional) Create a global alias or symlink to `~/.ipython/sql_notepad/mysql` so you can use the command from anywhere.
 
 The installer will ask for your MySQL username, password, host, port, and (optionally) your database name.
 
