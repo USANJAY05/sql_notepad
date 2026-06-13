@@ -1,7 +1,8 @@
 @echo off
 :: Wrapper script for the MySQL notebook environment
+set SCRIPT_DIR=%~dp0
 if "%~1"=="" (
-    python install.py help
+    python "%SCRIPT_DIR%install.py" help
 ) else (
-    python install.py %*
+    python "%SCRIPT_DIR%install.py" %*
 )

@@ -1,12 +1,14 @@
 #!/bin/sh
 # Wrapper script for the MySQL notebook environment
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 if [ "$#" -eq 0 ]; then
     set -- "help"
 fi
 
 if command -v python3 >/dev/null 2>&1; then
-    python3 install.py "$@"
+    python3 "$SCRIPT_DIR/install.py" "$@"
 else
-    python install.py "$@"
+    python "$SCRIPT_DIR/install.py" "$@"
 fi

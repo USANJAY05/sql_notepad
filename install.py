@@ -327,7 +327,7 @@ def jupyter_command() -> list[str]:
         "--ip=0.0.0.0",
         f"--port={PORT}",
         "--no-browser",
-        f"--notebook-dir={PROJECT_DIR}",
+        f"--notebook-dir={Path.cwd()}",
     ]
 
 

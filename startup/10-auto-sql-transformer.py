@@ -23,7 +23,7 @@ if not all([user, host]):
 else:
     encoded_password = quote_plus(password)
     auth = f"{user}:{encoded_password}" if password else user
-    database = f"/{dbname}" if dbname else "/"
+    database = f"/{dbname}" if dbname else ""
     conn_str = f"mysql+mysqlconnector://{auth}@{host}:{port}{database}"
 
     ip = get_ipython()
