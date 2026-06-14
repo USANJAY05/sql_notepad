@@ -5,12 +5,13 @@ from urllib.parse import quote_plus
 from IPython import get_ipython
 from dotenv import load_dotenv
 
+startup_dir = Path(__file__).resolve().parent
+dotenv_path = startup_dir / ".env"
 
-dotenv_path = Path.home() / ".ipython" / "profile_default" / "startup" / ".env"
-if dotenv_path.exists():
-    load_dotenv(dotenv_path)
-else:
+if not dotenv_path.exists():
     print(f"Warning: {dotenv_path} not found.")
+else:
+    load_dotenv(dotenv_path)
 
 user = os.getenv("DB_USER")
 password = os.getenv("DB_PASSWORD", "")
